@@ -1,0 +1,83 @@
+{
+    "port": 1080,
+    "log": {
+        "loglevel": "warning"
+    },
+    "inbound": {
+        "protocol": "socks",
+        "settings": {
+            "auth": "noauth",
+            "udp": true,
+            "ip": "0.0.0.0"
+        }
+    },
+    "inboundDetour": [{
+        "protocol": "http",
+        "port": 8080,
+        "settings": {}
+    }],
+    "outbound": {
+        "protocol": "vmess",
+        "settings": {
+            "vnext": [
+                {
+                    "address": "47.90.124.40",
+                    "port": 3389,
+                    "users": [
+                        {
+                            "id": "7ec4f246-4a93-4f9a-810b-597eb14b1972",
+                            "level": 1,
+                            "alterId": 100
+                        }
+                    ]
+                }
+            ]
+        },
+        "streamSettings": {
+            "network": "kcp"
+        }
+    },
+    "outboundDetour": [
+        {
+            "protocol": "freedom",
+            "settings": {},
+            "tag": "direct"
+        }
+    ],
+    "routing": {
+        "strategy": "rules",
+        "settings": {
+            "rules": [
+                {
+                    "type": "chinasites",
+                    "outboundTag": "direct"
+                },
+                {
+                    "type": "chinaip",
+                    "outboundTag": "direct"
+                },
+                {
+                    "type": "field",
+                    "ip": [
+                        "0.0.0.0/8",
+                        "10.0.0.0/8",
+                        "100.64.0.0/10",
+                        "127.0.0.0/8",
+                        "169.254.0.0/16",
+                        "172.16.0.0/12",
+                        "192.0.0.0/24",
+                        "192.0.2.0/24",
+                        "192.168.0.0/16",
+                        "198.18.0.0/15",
+                        "198.51.100.0/24",
+                        "203.0.113.0/24",
+                        "::1/128",
+                        "fc00::/7",
+                        "fe80::/10"
+                    ],
+                    "outboundTag": "direct"
+                }
+            ]
+        }
+    }
+}
